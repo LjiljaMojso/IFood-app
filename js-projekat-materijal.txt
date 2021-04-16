@@ -1,0 +1,10 @@
+***** JS PROJECT *****
+
+
+WHAT SHOULD YOU DO ?
+
+Use provided app structure in order to create an app that will search Food recipes. 
+
+API you should use is https://developer.edamam.com (you have to register).
+
+You will need both, app_id and app_key, as per documentation. app_id should be before app_key when used in URL.

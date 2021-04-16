@@ -1,0 +1,20 @@
+***** JS PROJECT HOMEWORK *****
+
+
+WHAT SHOULD YOU DO ?
+
+TASK 1:
+
+Add fields for calories range (min and max calories), as per API documentation.
+
+TASK 2:
+
+Each time when you fetch results you get 10 results by default, as well as info how many results in total there are. 
+
+Add pagination, so in the bottom of the page you have results pages like:
+
+1 2 3 4 5 etc.
+
+When you switch to some other page you should send request and get results for that page.
+
+Check API documentation in order to find out how to get range of results (from and to).
