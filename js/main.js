@@ -1,20 +1,20 @@
-var appId = "4c581ddc";
-var appKey = "2b9046cf40a6ddf4b346200f1c9f5cdd";
+const appId = "4c581ddc";
+const appKey = "2b9046cf40a6ddf4b346200f1c9f5cdd";
 
-var submitBtn = document.querySelector("button");
-var searchInput = document.querySelector("input.keyword-input");
-var recipesSection = document.getElementById("recipes");
-var minCal = document.querySelector('input.minCal');
-var maxCal = document.querySelector('input.maxCal');
+const submitBtn = document.querySelector("button");
+const searchInput = document.querySelector("input.keyword-input");
+const recipesSection = document.getElementById("recipes");
+const minCal = document.querySelector('input.minCal');
+const maxCal = document.querySelector('input.maxCal');
 
-function getData(showResultsFromIndex) {
-  var request = new XMLHttpRequest();
-  var loader = createLoader();
-  var url = requestUrl(showResultsFromIndex);
+const getData = showResultsFromIndex => {
+  let request = new XMLHttpRequest();
+  let loader = createLoader();
+  let url = requestUrl(showResultsFromIndex);
 
   request.open("GET", url);
 
-  request.onload = function () {
+  request.onload = () => {
     if (request.status === 200 || request.status === 201) {
       createContent(JSON.parse(request.responseText));
       loader.innerHTML = "";
@@ -24,7 +24,7 @@ function getData(showResultsFromIndex) {
   request.send();
 }
 
-function requestUrl(showResultsFromIndex = 0) {
+const requestUrl = (showResultsFromIndex = 0) => {
   
   var diet = document.querySelector('select[name="diet"]');
   var dietType = diet.value ? "&diet=" + diet.value : "";
@@ -37,19 +37,30 @@ function requestUrl(showResultsFromIndex = 0) {
 
   return url;
 }
+const createEl = (type,path,property) => {
+  const element = document.createElement(type);
+  if (type === "img") {
+    element.setAttribute("src",path);
+  } else {
+    element.textContent = path;
+    if (property) {
+      element.classList.add(property)
+    }
+  }
+  return element;
+}
+const createLoader = () => {
+  const loader = document.querySelector(".loader");
+  const loaderImage = createEl("img","./img/loader.gif");
 
-function createLoader() {
-  var loader = document.querySelector(".loader");
-  var loaderImage = document.createElement("img");
-  loaderImage.setAttribute("src","./img/loader.gif")
-
-  loader.append(loaderImage);
+  loader.appendChild(loaderImage);
   return loader;
+
 }
 
 // Content
-function createContent(data) {
-  var allResults = document.querySelector(".recipe-count-number");
+const createContent = data => {
+  const allResults = document.querySelector(".recipe-count-number");
   allResults.textContent = data.count;
 
   recipesSection.innerHTML = "";
@@ -64,86 +75,77 @@ function createContent(data) {
     recipesSection.append(erorParagraf);
   }
 }
+const createRecipe = article => {
+  const recipesSection = document.getElementById("recipes");
+  const recipeDiv = createEl("article","","recipe-element");
 
-function createRecipe(article) {
-  var recipeDiv = document.createElement("article");
-  recipeDiv.classList.add("recipe-element");
-  recipeDiv.addEventListener("click", function () {
+  recipeDiv.addEventListener("click", () => {
     window.open(article.recipe.url, "_blank");
   });
-  var recipeImg = document.createElement("img");
-  recipeImg.setAttribute("src",article.recipe.image);
+  const recipeImg = createEl("img",article.recipe.image);
   recipeDiv.appendChild(recipeImg);
-  var h3 = document.createElement("h3");
-  h3.textContent = article.recipe.label;
+
+  const h3 = createEl("h3",article.recipe.label);
   recipeDiv.appendChild(h3);
-  var paragraf = document.createElement("p");
+
+  const paragraf = document.createElement("p");
   paragraf.textContent =  Math.round(article.recipe.calories / article.recipe.yield) + " kcal";
   paragraf.classList.add("calories");
   recipeDiv.appendChild(paragraf);
+
   recipeDiv.appendChild(getLabels(article.recipe.healthLabels))
     
   recipesSection.appendChild(recipeDiv);
 }
 
-function getLabels(labels) {
-  var lablesDiv = document.createElement("div", "", "labels");
-  lablesDiv.classList.add("labels");
+const getLabels = (labels) => {
+  let labelsDiv = createEl("div","","labels");
 
-  labels.forEach(function (label) {
-    var labelParagraf = document.createElement("p", label,"label");
-    labelParagraf.classList.add("label");
-    labelParagraf.textContent=("string",label)
+  labels.forEach( (label) => labelsDiv.appendChild(createEl("p",label,"label")));
 
-    lablesDiv.appendChild(labelParagraf);
-  });
-  return lablesDiv;
-}
+  return labelsDiv
+};
 
-function createPagination(data) {
-  var pagesDiv = document.querySelector(".pagination");
-  var allPages = Math.round(data.count / 10);
-  var activePage = data.from / 10;
+const createPagination = data => {
+  let pagesDiv = document.querySelector(".pagination");
+  let allPages = Math.round(data.count / 10);
+  let activePage = data.from / 10;
   pagesDiv.innerHTML = "";
 
   if (allPages > 10) allPages = 10;
 
-  for (var page = 1; page <= allPages; page++) {
+  for (let page = 1; page <= allPages; page++) {
     if (page - 1 === activePage) {
-      var active = document.createElement("button", page);
+      let active = document.createElement("button", page);
       active.setAttribute("disabled", true);
       pagesDiv.append(active);
       continue;
     }
-    var someButton = document.createElement("button", page);
-    someButton.textContent = ("number",page);
-
+    const someButton = createEl("button", page);
     pagesDiv.append(someButton);
   }
 
   paginationOnClick();
 }
-
-function paginationOnClick() {
-  var paginationBtns = document.querySelectorAll(".pagination button");
+const paginationOnClick = () => {
+  const paginationBtns = document.querySelectorAll(".pagination button");
 
   paginationBtns.forEach(function (btn, i) {
-    var index = i * 10;
-    btn.addEventListener("click", function () {
+    const index = i * 10;
+    btn.addEventListener("click", () => {
       getData(index);
       window.scrollTo({ left: 0, top: 500, behavior: "smooth" });
     });
   });
 }
-
-function activeBtn() {
+const activeBtn = () => {
   searchInput.value && minCal.value && maxCal.value
     ? submitBtn.removeAttribute("disabled")
     : submitBtn.setAttribute("disabled", true);
 }
 
-function setMinMaxInputNum(e, element, attribute, callback) {
-  var number = Math.abs(e.target.value);
+const setMinMaxInputNum = (e, element, attribute, callback) => {
+  const number = Math.abs(e.target.value);
 
   element.setAttribute(attribute, number);
   callback();
