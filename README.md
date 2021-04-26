@@ -13,4 +13,4 @@ A demo app that will search Food recipes. Final project in vanila java script fo
 * [Contact](#contact)
 
 ## Screenshots
-![Example screenshot](https://github.com/LjiljaMojso/IFood-app/Food app.png)
+(https://github.com/LjiljaMojso/IFood-app/blob/main/Food%20app.png)
