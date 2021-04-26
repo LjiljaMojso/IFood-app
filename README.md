@@ -24,9 +24,9 @@ $ cd <location>
 $ git clone <url>
 In case of running es-6 version branch, you need to run local server. For that you have to install node first, than just type next commands in Git Bash:
 
-`$ cd <project-folder>
-$ npm install -g http -server
-$ http-server`
+`$ cd <project-folder>`
+`$ npm install -g http -server`
+`$ http-server`
 
 ## Status
 Project is: _finished_.
