@@ -34,4 +34,4 @@ Project is: _finished_.
 ## Inspiration
 Project inspired by my code bootcamp 
 lecturer, for my java script final exam. 
-We used https://developer.edamam.com/edamam-recipe-api for crate this app
+We used https://developer.edamam.com/edamam-recipe-api for creating this app
